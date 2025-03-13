@@ -13,7 +13,7 @@ const Card = ({ name }) => {
     };
 
     fetchImg();
-  }, []);
+  }, [name]);
 
   return (
     <div>
