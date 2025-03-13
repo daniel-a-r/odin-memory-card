@@ -1,5 +1,5 @@
-import './App.css';
-import pokemonLogo from './assets/pokemon-500.png';
+import '../styles/App.css';
+import pokemonLogo from '../assets/pokemon-500.png';
 
 function App() {
   return (
