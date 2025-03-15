@@ -1,25 +1,13 @@
-import { useEffect, useState } from 'react';
+import '../styles/Card.css';
 
-const Card = ({ name }) => {
-  const [imgURL, setImgURL] = useState(null);
-
-  useEffect(() => {
-    const fetchImg = async () => {
-      const url = `https://pokeapi.co/api/v2/pokemon/${name}`;
-      const response = await fetch(url);
-      const json = await response.json();
-      const imgURL = json.sprites.other['official-artwork'].front_default;
-      setImgURL(imgURL);
-    };
-
-    fetchImg();
-  }, [name]);
-
+const Card = ({ pokemonName, handler, imgURL }) => {
   return (
-    <div>
-      <img src={imgURL} alt='' />
-      <p>{name}</p>
-    </div>
+    <li>
+      <button onClick={handler} data-name={pokemonName}>
+        <img src={imgURL} alt='' />
+        <p>{pokemonName}</p>
+      </button>
+    </li>
   );
 };
 

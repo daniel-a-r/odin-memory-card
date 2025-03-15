@@ -1,0 +1,14 @@
+li {
+  list-style: none;
+}
+
+button {
+  border: 0.25rem solid #ffcd02;
+  border-radius: 0.5rem;
+}
+
+p {
+  font-size: 1.1rem;
+  font-weight: 550;
+  color: #2652fd;
+}

@@ -1,30 +1,29 @@
 import Card from './Card.jsx';
+import '../styles/Cards.css';
 
-const Cards = () => {
-  const pokemonList = [
-    'Charizard',
-    'Lucario',
-    'Umbreon',
-    'Pikachu',
-    'Eevee',
-    'Dragonite',
-    'Arcanine',
-    'Blaziken',
-    'Mew',
-    'Gengar',
-    'Typhlosion',
-    'Absol',
-    'Darkrai',
-    'Espeon',
-    'Mewtwo',
-    'Scizor',
-  ];
+const Cards = ({ handler, pokemonDataList }) => {
+  const shufflePokemonList = (list) => {
+    for (let i = list.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [list[i], list[j]] = [list[j], list[i]];
+    }
+    return list;
+  };
 
-  const pokemonCardList = pokemonList.map((pokemon) => {
-    return <Card key={pokemon} name={pokemon} />;
+  const shuffledList = shufflePokemonList(pokemonDataList);
+
+  const pokemonCardList = shuffledList.map((pokemonData) => {
+    return (
+      <Card
+        key={pokemonData.name}
+        pokemonName={pokemonData.name}
+        imgURL={pokemonData.imgURL}
+        handler={handler}
+      />
+    );
   });
 
-  return <div>{pokemonCardList}</div>;
+  return <ul>{pokemonCardList}</ul>;
 };
 
 export default Cards;

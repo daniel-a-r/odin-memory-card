@@ -1,0 +1,27 @@
+ul {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  gap: 1rem;
+}
+
+img {
+  width: 100%;
+  object-fit: contain;
+}
+
+@media (min-width: 600px) {
+  ul {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1000px) {
+  ul {
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
+}

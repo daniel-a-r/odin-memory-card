@@ -1,8 +1,10 @@
-const Score = () => {
+import '../styles/Score.css';
+
+const Score = ({ currentScore, bestScore }) => {
   return (
-    <section>
-      <h2>Current Score: 3</h2>
-      <h2>Best Score: 4</h2>
+    <section className='scores'>
+      <h2 className='current-score'>Current Score: {currentScore}</h2>
+      <h2 className='best-score'>Best Score: {bestScore}</h2>
     </section>
   );
 };
