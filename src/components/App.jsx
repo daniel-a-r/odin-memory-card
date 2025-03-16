@@ -31,17 +31,6 @@ function App() {
       'Scizor',
     ];
 
-    const fetchData = (pokemonName) => {
-      const url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
-      return axios.get(url);
-    };
-
-    const fetchAllData = async (pokemonList) => {
-      const promises = pokemonList.map((pokemon) => fetchData(pokemon));
-      const responses = await Promise.all(promises);
-      return responses;
-    };
-
     const extractData = (response) => {
       const name = response.data.name;
       const nameFormatted = name.at(0).toUpperCase() + name.slice(1);
@@ -50,13 +39,17 @@ function App() {
       return { name: nameFormatted, imgURL };
     };
 
-    const getImgURLs = async (pokemonList) => {
-      const responses = await fetchAllData(pokemonList);
+    const getPokemonData = async (pokemonList) => {
+      const baseURL = 'https://pokeapi.co/api/v2/pokemon/';
+      const promises = pokemonList.map((pokemon) =>
+        axios.get(`${baseURL}${pokemon}`),
+      );
+      const responses = await Promise.all(promises);
       const pokemonData = responses.map((response) => extractData(response));
       setPokemonDataList([...pokemonData]);
     };
 
-    getImgURLs(pokemonList);
+    getPokemonData(pokemonList);
   }, []);
 
   const handleSelectCard = (e) => {
