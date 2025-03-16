@@ -42,15 +42,17 @@ function App() {
       return responses;
     };
 
+    const extractData = (response) => {
+      const name = response.data.name;
+      const nameFormatted = name.at(0).toUpperCase() + name.slice(1);
+      const imgURL =
+        response.data.sprites.other['official-artwork'].front_default;
+      return { name: nameFormatted, imgURL };
+    };
+
     const getImgURLs = async (pokemonList) => {
       const responses = await fetchAllData(pokemonList);
-      const pokemonData = responses.map((response) => {
-        const name = response.data.name;
-        const nameFormatted = name.at(0).toUpperCase() + name.slice(1);
-        const imgURL =
-          response.data.sprites.other['official-artwork'].front_default;
-        return { name: nameFormatted, imgURL };
-      });
+      const pokemonData = responses.map((response) => extractData(response));
       setPokemonDataList([...pokemonData]);
     };
 
