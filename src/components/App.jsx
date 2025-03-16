@@ -3,6 +3,7 @@ import Header from './Header.jsx';
 import Score from './Score.jsx';
 import Cards from './Cards.jsx';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function App() {
   const [clickedCards, setClickedCards] = useState(new Set());
@@ -30,27 +31,30 @@ function App() {
       'Scizor',
     ];
 
-    const fetchImgURL = async (pokemonName) => {
+    const fetchData = (pokemonName) => {
       const url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
-      const response = await fetch(url);
-      const json = await response.json();
-      const imgURL = json.sprites.other['official-artwork'].front_default;
-      return imgURL;
+      return axios.get(url);
     };
 
-    const fetchAllImgURLs = (pokemonList) => {
-      pokemonList.map(async (pokemon) => {
-        const imgURL = await fetchImgURL(pokemon);
-        setPokemonDataList((list) => {
-          if (!list.map((item) => item.name).includes(pokemon)) {
-            return [...list, { name: pokemon, imgURL }];
-          }
-          return [...list];
-        });
+    const fetchAllData = async (pokemonList) => {
+      const promises = pokemonList.map((pokemon) => fetchData(pokemon));
+      const responses = await Promise.all(promises);
+      return responses;
+    };
+
+    const getImgURLs = async (pokemonList) => {
+      const responses = await fetchAllData(pokemonList);
+      const pokemonData = responses.map((response) => {
+        const name = response.data.name;
+        const nameFormatted = name.at(0).toUpperCase() + name.slice(1);
+        const imgURL =
+          response.data.sprites.other['official-artwork'].front_default;
+        return { name: nameFormatted, imgURL };
       });
+      setPokemonDataList([...pokemonData]);
     };
 
-    fetchAllImgURLs(pokemonList);
+    getImgURLs(pokemonList);
   }, []);
 
   const handleSelectCard = (e) => {
